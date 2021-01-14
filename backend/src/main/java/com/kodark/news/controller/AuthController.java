@@ -174,9 +174,10 @@ public class AuthController {
 				+ env.getProperty("oauth.google.id") + "&redirect_uri=http://localhost:8090/auth/google/redirect"
 				+ "&response_type=code" + "&scope=email"
 //			        + "&scope=email%20profile%20openid"
-//			        + "&scope=https://www.googleapis.com/auth/userinfo.email
+//			        + "&scope=https://www.googleapis.com/auth/userinfo.email"
 				+ "&access_type=offline>";
 		response.setHeader("Links", link + "; rel=\"next\"");
+		System.out.println(link);
 		return new ResponseEntity<>(HttpStatus.FOUND); // 302
 	}
 

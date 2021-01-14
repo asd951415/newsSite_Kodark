@@ -9,22 +9,29 @@
       <template v-if="currentRoute === 'new-post'">
         <ArticleWriteBody />
       </template>
+      <template v-if="currentRoute === 'article'">
+        <WaitArticleListTest />
+      </template>
     </div>
   </div>
 </template>
+
+
 
 <script>
 import MyPageHeader from '../components/headers/MyPageHeader'
 import IntroduceSideBar from '../components/sidebars/IntroduceSideBar'
 import ProfileEditBody from '../components/bodies/ProfileEditBody'
 import ArticleWriteBody from '../components/bodies/ArticleWriteBody'
+import WaitArticleListTest from '../components/bodies/reporters/WaitArticleListTest'
 
 export default {
   components: {
     MyPageHeader,
     IntroduceSideBar,
     ProfileEditBody,
-    ArticleWriteBody
+    ArticleWriteBody,
+    WaitArticleListTest
   },
   computed: {
     // side menu
