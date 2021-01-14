@@ -243,7 +243,7 @@ public class AuthController {
 		parameter.put("_email", email);
 		authProcedureService.execuAuthProcedure(parameter);
 		String resultSet = (String) parameter.get("result_set");
-
+		System.out.println(resultSet);
 		if (!resultSet.equals("sign_up") || !resultSet.equals("exist")) {
 			// throw error
 		}

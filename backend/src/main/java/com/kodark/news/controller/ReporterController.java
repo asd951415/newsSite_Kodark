@@ -51,21 +51,21 @@ public class ReporterController {
 			params = new HashMap<String, Object>();
 			map = new HashMap<String, Object>();
 			//params.put("_id", request.getAttribute("id")); 미사용
-			params.put("_id", 5); //임의로 지정
+			params.put("_id", 3); //임의로 지정
 			params.put("_switch", "reporter_profile");
 			
 			map = reportersProcedureService.execuReportersProcedureMap(params);
 
-			if (map.isEmpty()) {
-				throw new NullPointerException();
+			
+			if(params.get("result_set").equals("200")) {
+				return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Map<String,Object>>(HttpStatus.NO_CONTENT);
 			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			return new ResponseEntity<Map<String, Object>>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		
 	}
 
 	/**
