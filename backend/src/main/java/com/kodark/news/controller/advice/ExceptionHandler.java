@@ -1,14 +1,17 @@
 package com.kodark.news.controller.advice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.kodark.news.controller.advice.exceptions.ForbiddenException;
+import com.kodark.news.controller.advice.exceptions.SQLConflictException;
 import com.kodark.news.controller.advice.exceptions.UnauthorizedException;
 
 /*
@@ -39,4 +42,21 @@ public class ExceptionHandler {
 		
 		return new ResponseEntity<>(HttpStatus.FORBIDDEN); // 403
 	}
+	
+	// DB unique값 입력시 중복 예외
+	@org.springframework.web.bind.annotation.ExceptionHandler({SQLConflictException.class, DuplicateKeyException.class})
+	protected ResponseEntity<Map<String, Object>> handleSQLConflictException(Exception e) {
+		if(logger.isWarnEnabled())
+			logger.warn(e.getMessage());
+		
+		return new ResponseEntity<>(HttpStatus.CONFLICT); // 409
+	}
+	
+//	@org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+//	protected ResponseEntity<Map<String, Object>> handleUndefinedException(Exception e) {
+//		if(logger.isWarnEnabled())
+//			logger.error(e.getMessage());
+//		
+//		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500
+//	}
 }

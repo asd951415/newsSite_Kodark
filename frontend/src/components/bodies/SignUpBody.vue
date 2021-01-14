@@ -95,7 +95,7 @@
         <span>
           Already have a KoDark account?
         </span>
-        <v-btn class="font-weight-black text-capitalize text-decoration-underline" text height="24px" width="70px" depressed to="/ko/auth/signIn">
+        <v-btn class="font-weight-black text-capitalize text-decoration-underline" text height="24px" width="70px" depressed to="/en/auth/signIn">
           Sign in
         </v-btn>
       </div>
@@ -234,7 +234,7 @@ export default {
     moveRoute () {
       this.wasCreated = false
       this.$router.push({ path: this.nextLink })
-      // this.$router.push({ path: '/ko/auth/signIn' })
+      // this.$router.push({ path: '/en/auth/signIn' })
     }
   }
 }

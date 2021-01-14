@@ -18,7 +18,7 @@ public interface HelpProcedureMapper {
 			+ ",#{_title, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_content, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_createdAt, mode=IN, jdbcType=TIMESTAMP, javaType=java.lang.String}"
-			+ ",#{_accepted, mode=IN, jdbcType=TINYINT, javaType=java.lang.String}"
+			+ ",#{_doneFlag, mode=IN, jdbcType=CHAR, javaType=java.lang.String}"
 			+ ",#{result_set, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ")}")
 	@Options(statementType = StatementType.CALLABLE)
@@ -35,4 +35,5 @@ public interface HelpProcedureMapper {
 			+ ")}")
 	@Options(statementType = StatementType.CALLABLE)
 	public Map<String, Object> helpProcedureMap(Map<String, Object> params);
+
 }

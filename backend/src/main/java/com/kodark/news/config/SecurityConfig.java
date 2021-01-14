@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /*
  * title : Security 환경
@@ -17,14 +18,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
+		System.out.println("SecurityConfig");
         httpSecurity
-//        		.formLogin().disable()
-//                .csrf()
-//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                .csrf()
+		        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		
-        		.csrf().disable()
-        		.formLogin().disable()
-                .httpBasic();
+//        		.csrf().disable()
+//        		.formLogin().disable()
+//                .httpBasic();
     }
 	
 }

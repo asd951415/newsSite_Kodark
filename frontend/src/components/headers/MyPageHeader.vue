@@ -8,13 +8,13 @@
   >
   <div class="headerContent">
     <div class="homeBtn">
-      <router-link to="/ko/home" class="">
+      <router-link to="/en/home" class="">
         <span><img class="teamLogo" width="25" src="../../assets/img/k.svg"></span>
         <span class="home">Home</span>
       </router-link>
     </div>
     <div class="logo">
-      <router-link to="/ko/home" class="">
+      <router-link to="/en/home" class="">
         <img class="teamLogo" width="200" src="../../assets/img/kodark.svg">
       </router-link>
     </div>
@@ -37,19 +37,9 @@ export default {
 
 .headerContent {
   display: grid;
-  grid-template-columns: 300px 1000px;
+  grid-template-columns: 3fr 4fr;
   justify-content: center;
   width: 100%;
-}
-
-.homeBtn img{
-  position: relative;
-  left: 80px;
-}
-.home{
-  position: relative;
-  left: 100px;
-  font-size: 16px;
 }
 
 .headerContent a{
@@ -63,9 +53,13 @@ export default {
   vertical-align: middle;
 }
 
-.teamLogo{
-  justify-self: left;
-  position: relative;
-  left: 300px;
+.homeBtn{
+  justify-self: center;
 }
+
+.home{
+  margin-left: 24px;
+}
+
+
 </style>

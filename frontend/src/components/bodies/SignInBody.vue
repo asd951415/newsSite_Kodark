@@ -48,7 +48,7 @@
         <span>
           Dont't have a KoDark account?
         </span>
-        <v-btn class="font-weight-black text-capitalize text-decoration-underline" text height="24px" width="100px" depressed to="/ko/auth/signUp">
+        <v-btn class="font-weight-black text-capitalize text-decoration-underline" text height="24px" width="100px" depressed to="/en/auth/signUp">
           Create one
         </v-btn>
       </div>

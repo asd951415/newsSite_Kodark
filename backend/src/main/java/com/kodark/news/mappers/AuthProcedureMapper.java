@@ -28,7 +28,7 @@ public interface AuthProcedureMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	public void authProcedure(Map<String, Object> params);
 
-	// ���ڸ��
+	// 
 	@Select(value = "{CALL admin_repoters_procedure}")
 	@Options(statementType = StatementType.CALLABLE)
 	public List<Map<String, Object>> getInfoReporters();

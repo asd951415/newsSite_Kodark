@@ -14,12 +14,13 @@ public class ReportersProcedureDao {
 	@Autowired
 	ReportersProcedureMapper reportersProcedureMapper;
 
-	public void reportersBlindProcedure(Map<String, Object> params) {
-		reportersProcedureMapper.reportersBlindProcedure(params);
-	}
 
 	public Map<String, Object> execuReportersProcedureMap(Map<String, Object> params) {
 		return reportersProcedureMapper.reportersProcedureMap(params);
+	}
+
+	public List<Map<String, Object>> execuReportersProcedure(Map<String, Object> params) {
+		return reportersProcedureMapper.reportersProcedure(params);
 	}
 	
 	public List<Map<String, Object>> execuReportersProcedureList(Map<String, Object> params) {
@@ -32,3 +33,4 @@ public class ReportersProcedureDao {
 	}
 
 }
+

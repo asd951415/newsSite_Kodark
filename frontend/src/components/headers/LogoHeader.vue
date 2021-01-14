@@ -7,7 +7,7 @@
   >
     <v-spacer></v-spacer>
     <div>
-       <router-link to="/ko/home">
+       <router-link to="/en/home">
         <img width="186" src="../../assets/img/kodark.svg">
       </router-link>
     </div>

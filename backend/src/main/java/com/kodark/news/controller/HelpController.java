@@ -47,7 +47,6 @@ public class HelpController {
 		
 		list = helpProcedureService.execuHelpProcedure(params);
 		
-		
 		for(int i =0; i<list.size(); i++) {
 			int id = (int)list.get(i).get("id");
 			String title = (String) list.get(i).get("title");
@@ -68,8 +67,8 @@ public class HelpController {
 	
 
 	/**
-	 * title : 내문의글
-	 * desc : DB에 created_at(DATETIME), accepted(boolean) 컬럼 추가
+	 * title : 내 문의글(41)
+	 * desc :
 	 * author : 최현지
 	 * date : 2021-01-11
 	 */
@@ -79,10 +78,12 @@ public class HelpController {
 		Map<String, Object> params = new HashMap<>();
 		Map<String, Object>link; 
 		
+		int id = (int) request.getAttribute("id");
+		
 		params.put("_switch", "question_list");
-		params.put("_user_id", 1);
+		params.put("_user_id", id);
 		list = helpProcedureService.execuHelpProcedure(params);
-	
+		
 		for(int i=0; i<list.size(); i++) {
 			link = new HashMap<String, Object>();  
 
@@ -94,7 +95,7 @@ public class HelpController {
 			temp.put("id", list.get(i).get("id"));
 			temp.put("title",  list.get(i).get("title"));
 			temp.put("createdAt",  list.get(i).get("created_at"));
-			temp.put("accepted", list.get(i).get("accepted"));
+			temp.put("doneFlag", list.get(i).get("done_flag"));
 			temp.put("_link", link);
 			
 			list.set(i, temp);
@@ -109,6 +110,7 @@ public class HelpController {
 		}
 	
 	}	
+
 	/**
 	 * 문의글 상세 페이지
 	 * author : 이종현
@@ -154,4 +156,5 @@ public class HelpController {
 		}
 		return new ResponseEntity<Map<String,Object>>(HttpStatus.OK);
 	}
+
 }

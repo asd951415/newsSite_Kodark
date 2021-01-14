@@ -1,15 +1,18 @@
 <template>
   <v-app>
     <router-view />
+    <Footer />
   </v-app>
 </template>
 
 <script>
+import Footer from './components/footer/Footer'
 
 export default {
   name: 'App',
 
   components: {
+    Footer
   },
 
   data: () => ({
@@ -18,7 +21,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 * {
   box-sizing: border-box;
   margin: 0;
@@ -29,5 +32,9 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   /* padding: 0 3%; */
+}
+
+.displayNone {
+  display: none;
 }
 </style>

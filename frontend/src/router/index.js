@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import AuthPage from '../views/AuthPage'
 import IntroducePage from '../views/IntroducePage'
 import MyPage from '../views/MyPage'
+import AdminPage from '../views/AdminPage'
+import ReporterPage from '../views/ReporterPage'
 
 
 Vue.use(VueRouter)
@@ -11,24 +13,40 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/ko/home'
+    redirect: '/en/home'
   },
   {
-    path: '/ko/home',
+    path: '/en/home',
     name: 'Home',
     component: Home
   },
   {
-    path: '/ko/auth/:sign',
+    path: '/en/auth/:sign',
     component: AuthPage
   },
   {
-    path: '/ko/introduce',
+    path: '/en/introduce',
     component: IntroducePage
   },
   {
-    path: '/ko/users/my-page',
+    path: '/en/users/my-page',
     component: MyPage
+  },
+  {
+    path: '/en/users/my-page/:manage',
+    component: MyPage
+  },
+  {
+    path: '/en/admin/*',
+    component: AdminPage
+  },
+  {
+    path: '/en/reporters',
+    component: ReporterPage
+  },
+  {
+    path: '/en/reporters/*',
+    component: ReporterPage
   }
 ]
 

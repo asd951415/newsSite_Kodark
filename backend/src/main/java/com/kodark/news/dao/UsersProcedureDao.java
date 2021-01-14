@@ -32,6 +32,13 @@ public class UsersProcedureDao {
 
 	public Map<String, Object> myPage(Map<String, Object> params) {
 		return usersProcedureMapper.getMyPage(params);
+	}
+	
+	public List<Map<String, Object>> subList(Map<String, Object> params){
+		return usersProcedureMapper.subList(params);
+	}
 
+	public Map<String, Object> myPageDetail(Map<String, Object> params) {
+		return usersProcedureMapper.getMyPageDetail(params);
 	}
 }

@@ -15,7 +15,7 @@
       </li>
       <li>
         <template v-if="!account">
-          <v-btn depressed to="/ko/auth/signIn">Sign in</v-btn>
+          <v-btn depressed to="/en/auth/signIn">Sign in</v-btn>
         </template>
         <template v-else>
           <AccountMenu v-bind="account" />
@@ -32,7 +32,7 @@
         </div>
       </li>
       <li>
-        <router-link to="/ko/home">
+        <router-link to="/en/home">
           <img width="300" src="../../assets/img/kodark.svg">
         </router-link>
       </li>
