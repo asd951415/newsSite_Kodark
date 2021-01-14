@@ -1,10 +1,10 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `users_procedure`(
+CREATE DEFINER=`jack`@`localhost` PROCEDURE `users_procedure`(
    in _switch varchar(20)
     , in _id int
     , in _reporter_id int
-    , inout _email varchar(50)    
-    , inout _nickName varchar(20)
+    , inout _email varchar(50)  
     , inout _pwd varchar(300)
+    , inout _nickName varchar(20)
     , inout _name varchar(20)    
     , inout _local varchar(50)
     , inout _birth datetime
@@ -18,6 +18,7 @@ declare emailCheck int;
 declare idCount int;
 declare letterCheck char(1);
 declare tmp_pwd varchar(300);
+declare nickNameCount int;
 
 -- 회원정보 수정(34)--------------------------------------------
    if _switch = 'update_detail' then
@@ -36,11 +37,6 @@ declare tmp_pwd varchar(300);
       else 
          set result_set = '500';
       end if; 
-      
--- 회원정보(33)--------------------------------------------
-    elseif _switch = 'mypage_detail' then
-      select count(*) into idCount from users where id = _id;   
-      select exists (select email from users where id = _id) into emailCheck;   
 	end if;
 
 -- 회원 탈퇴(32) --------------------------------------------------
@@ -162,5 +158,30 @@ declare tmp_pwd varchar(300);
 			end if;
         end if;
 	end if;
+    
+if _switch = 'user_update' then
+	select count(*) into idCount from users where  id = _id;   
+	
+	if idCount > 0 then
+        select count(*) into nickNameCount from user_detail where nick_name = _nickName;
+		
+        if nickNameCount > 0 then
+			set result_set = '409';
+		else
+			select count(*) into idCount from user_detail where user_id = _id;
+            
+			if idCount > 0 then
+				update user_detail set nick_name= _nickName, name = _name, local = _local, birth = _birth, gender = _gender, image = _image
+                where user_id = _id;
+			else
+				insert into user_detail(user_id, nick_name, name, local, birth, gender, image)
+				values(_id, _nickName, _name, _local, _birth, _gender, _image);
+			end if;
+            set result_set = '200';
+		end if;
+	else
+		set result_set = '404';
+	end if;
+end if;
    
 END

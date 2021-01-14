@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_procedure`(
+CREATE DEFINER=`jack`@`localhost` PROCEDURE `admin_procedure`(
    in _switch varchar(20)
     , in _id int
     , in _input varchar(5000)
@@ -191,16 +191,16 @@ BEGIN
 	select 
     users.id, 
     user_detail.name, 
-    count(distinct article.id) as articleNum, 
+    count(article.id) as articleNum, 
     sum(article.hit) as totalHit,
     (select count(*) from subscriber where reporter_id = users.id) as subNum
     from users 
     
-    inner join user_detail 
+    left join user_detail 
     on 
     users.id = user_detail.user_id
     
-    right join article
+    left join article
     on
     users.id = article.reporter_id
     

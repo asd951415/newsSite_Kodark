@@ -100,7 +100,7 @@ public class ArticleController {
 			params = new HashMap<String, Object>();
 			params.put("_switch", "article_emotion");
 			params.put("_id", articleId);
-			list = articleProcedureService.excuArticleProcedureList(params);
+			list = articleProcedureService.execuArticleProcedure(params);
 			
 			sb = new StringBuffer();
 			pSize = list.size();
@@ -161,7 +161,7 @@ public class ArticleController {
 			params.put("_id", articleId);
 			params.put("_commentId", commentStartId);
 			
-			list = articleProcedureService.excuArticleProcedureList(params);
+			list = articleProcedureService.execuArticleProcedure(params);
 			for(int i=0; i<list.size(); i++) {
 				map = new HashMap<String, Object>();
 				temp = new HashMap<String, Object>();
@@ -237,7 +237,7 @@ public class ArticleController {
 			params.put("_category", category);
 			
 			System.out.println("프로시저 전 param~~~~~~~~~ "+ params );
-			list = articleProcedureService.execuArticleProcedure_2(params);
+			list = articleProcedureService.execuArticleProcedure(params);
 			System.out.println("프로시저 후 params~~~~~~ " + params);
 
 			for (int i = 0; i < list.size(); i++) {
@@ -327,7 +327,7 @@ public class ArticleController {
 		List<Map<String, Object>> categoryInfo = new ArrayList<Map<String,Object>>();
 		
 		params.put("_switch","category_info");
-		categoryInfo = articleProcedureService.execuArticleProcedure_2(params);
+		categoryInfo = articleProcedureService.execuArticleProcedure(params);
 		
 		return new ResponseEntity<List<Map<String, Object>>>(categoryInfo, HttpStatus.OK);// 200
 	}

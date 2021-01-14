@@ -14,16 +14,6 @@ import com.kodark.news.dto.CategoryDto;
 @Mapper
 public interface ArticleProcedureMapper {
 
-	@Select(value = "{CALL article_procedure("
-			+ "#{_switch, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
-			+ ",#{_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
-			+ ",#{_article_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
-			+ ",#{_reporter_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"	
-			+ ",#{result_set, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
-			+ ")}")
-	@Options(statementType = StatementType.CALLABLE)
-	List<Map<String, Object>> articleProcedure(Map<String, Object> params);
-
 	@Select(value = "{CALL article_getArticleDetail("
 			+ "#{_articleId, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer}"
 			+ ")}")
@@ -32,16 +22,10 @@ public interface ArticleProcedureMapper {
 	
 	@Select(value = "{CALL article_procedure("
 			+ "#{_switch, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
-			+ ",#{_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
+			+ ",#{_article_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
+			+ ",#{_reporter_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
+			+ ",#{_category, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String }"
 			+ ",#{_commentId, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
-			+ ",#{result_set, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
-			+ ")}")
-	@Options(statementType = StatementType.CALLABLE)
-	public List<Map<String, Object>> articleProcedureList(Map<String, Object> params);	
-
-
-	@Select(value = "{CALL article_procedure("
-			+ "#{_switch, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_id, mode=INOUT, jdbcType=INTEGER, javaType=java.lang.Integer }"
 			+ ",#{_title, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_subTitle, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
@@ -55,11 +39,10 @@ public interface ArticleProcedureMapper {
 			+ ",#{_report_id, mode=OUT, jdbcType=INTEGER, javaType=java.lang.Integer}"
 			+ ",#{_email, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_name, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
-			+ ",#{_category, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String }"
 			+ ",#{result_set, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ")}")
 	@Options(statementType = StatementType.CALLABLE)
-	public List<Map<String, Object>> articleProcedure_2(Map<String, Object> params);
+	public List<Map<String, Object>> articleProcedure(Map<String, Object> params);
 
 	@Select(value = "{CALL latest_procedure("
 			+ "#{_category, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
@@ -67,13 +50,4 @@ public interface ArticleProcedureMapper {
 	@Options(statementType = StatementType.CALLABLE)
 	public List<Map<String, Object>> latestProcedure(Map<String, Object> params);
 	
-	@Select(value = "{CALL article_procedure("
-	         + "#{_switch, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
-	         + ",#{_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
-	         + ",#{_commentId, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
-	         + ",#{result_set, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
-	         + ")}")
-	   @Options(statementType = StatementType.CALLABLE)
-	   public Map<String, Object> articleProcedureMap(Map<String, Object> params);
-
 }

@@ -71,7 +71,7 @@ public class AdminController {
 		try {
 			params = new HashMap<String, Object>();
 			params.put("_switch", "admin_reporters_list");
-			list = adminProcedureService.execuAdminProcedureList(params);
+			list = adminProcedureService.execuAdminProcedure(params);
 		} catch (Exception e) {
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<Map<String, Object>>>(HttpStatus.NO_CONTENT);
@@ -279,7 +279,7 @@ public class AdminController {
 		params.put("_switch", "article_list");
 		
 		try {
-			list = adminProcedureService.getArticleList(params);			
+			list = adminProcedureService.execuAdminProcedure(params);			
 			for (int i = 0; i < list.size(); i++) {
 				templist = new ArrayList<>();	
 				temp = new HashMap<>();
@@ -360,7 +360,7 @@ public class AdminController {
 		try {
 			
 		
-		list = adminProcedureService.getArticleList(params);		
+		list = adminProcedureService.execuAdminProcedure(params);		
 		for(int i=0;i<list.size();i++) {
 			System.out.println("list:"+list.get(i));
 			maps = new HashMap<>();
@@ -448,7 +448,7 @@ public class AdminController {
 		params.put("_switch", "user_info");
 		params.put("_id", startIndex-1);
 		try {	
-			list = adminProcedureService.getArticleList(params);
+			list = adminProcedureService.execuAdminProcedure(params);
 			for (int i = 0; i < list.size(); i++) {			
 				temp1 = new HashMap<>();
 				temp2 = new HashMap<>();
@@ -560,7 +560,7 @@ public class AdminController {
 			params.put("_switch","comment_report_list");
 			params.put("_commentId", commentStartId);
 			params.put("_doneFlag", doneFlag);
-			list = adminProcedureService.execuAdminProcedureList(params);
+			list = adminProcedureService.execuAdminProcedure(params);
 			
 			for(int i=0; i<list.size(); i++) {
 				map = new HashMap<String, Object>();
@@ -617,6 +617,7 @@ public class AdminController {
 			@RequestParam("articleId") int articleId, @RequestParam("status") String status, HttpServletResponse response){
 		List<Map<String, Object>> list = null;
 		Map<String, Object> params = null;
+		List<Map<String, Object>> mapList = null;
 		Map<String, Object> map = null;
 		Map<String, Object> temp = null;
 		Map<String, Object> mapAll = null;
@@ -627,9 +628,10 @@ public class AdminController {
 			params.put("_switch", "article_wait_detail");
 			params.put("_id", articleId);
 			params.put("_status", status);
-			map = adminProcedureService.execuAdminProcedureMap(params);
+			mapList = adminProcedureService.execuAdminProcedure(params);
+			map = mapList.get(0);
 			params.put("_switch", "article_wait_detail_image");
-			list = adminProcedureService.execuAdminProcedureList(params);
+			list = adminProcedureService.execuAdminProcedure(params);
 			
 			temp.put("id", map.get("id"));
 			temp.put("category", map.get("category"));

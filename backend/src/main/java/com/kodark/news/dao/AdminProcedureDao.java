@@ -14,24 +14,12 @@ public class AdminProcedureDao {
 	@Autowired
 	AdminProcedureMapper adminProcedureMapper;
 
-	public void excuAdminProcedure(Map<String, Object> params) {
-		adminProcedureMapper.adminProcedure(params);
-	}
-	
-	public Map<String, Object> execuAdminProcedureMap(Map<String, Object> params) {
-		return adminProcedureMapper.adminProcedureMap(params);
-	}
-	
-	public List<Map<String, Object>> execuAdminProcedureList(Map<String, Object> params) {
-		return adminProcedureMapper.adminProcedureList(params);
+	public List<Map<String, Object>> excuAdminProcedure(Map<String, Object> params) {
+		return adminProcedureMapper.adminProcedure(params);
 	}
 
 	public List<Map<String, Object>> getWaitArticles(String _status) {
 		return adminProcedureMapper.getWaitArticle(_status);
-	}
-
-	public List<Map<String, Object>> getArticleList(Map<String, Object> params) {
-		return adminProcedureMapper.getArticleList(params);
 	}
 
 	public void insertReporter(Map<String, Object> params) {

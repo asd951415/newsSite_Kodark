@@ -21,18 +21,8 @@ public class AdminProcedureServiceImpl implements AdminProcedureService {
 	AdminProcedureDao adminProcedureDao;
 
 	@Override
-	public void execuAdminProcedure(Map<String, Object> params) {
-		adminProcedureDao.excuAdminProcedure(params);
-	}
-	
-	@Override
-	public Map<String, Object> execuAdminProcedureMap(Map<String, Object> params) {
-		return adminProcedureDao.execuAdminProcedureMap(params);
-	}
-	
-	@Override
-	public List<Map<String, Object>> execuAdminProcedureList(Map<String, Object> params) {
-		return adminProcedureDao.execuAdminProcedureList(params);
+	public List<Map<String, Object>> execuAdminProcedure(Map<String, Object> params) {
+		return adminProcedureDao.excuAdminProcedure(params);
 	}
 
 	@Override
@@ -48,11 +38,6 @@ public class AdminProcedureServiceImpl implements AdminProcedureService {
 		// java.sql.SQLIntegrityConstraintViolationException 포괄적인 sql 예외
 		// org.springframework.dao.DuplicateKeyException 데이터 중복
 		// org.springframework.dao.DataIntegrityViolationException 데이터 제약 위반
-	}
-
-	@Override
-	public List<Map<String, Object>> getArticleList(Map<String, Object> params) {		
-		return adminProcedureDao.getArticleList(params);
 	}
 
 }

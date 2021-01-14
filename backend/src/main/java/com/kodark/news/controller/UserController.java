@@ -657,9 +657,6 @@ public class UserController {
 	
 	@PostMapping(path = "/detail", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity <String> detailUpdate(MultipartHttpServletRequest multiRequest, HttpServletRequest request, HttpServletResponse response) throws ParseException{
-		System.out.println("=====================================================");
-		System.out.println("detailUpdate");
-		System.out.println(request.getAttribute("id"));
 		MultipartFile imageFile = multiRequest.getFile("image");
 		String fileName = util.saveImage(imageFile, request);
 		String name = request.getParameter("name");
@@ -684,18 +681,15 @@ public class UserController {
 				 	"</users/my-page/detail>;	rel=\"next\","
 		);
 		
-		
-		
-		System.out.println(params);
 		if (params.get("result_set").equals("200")) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);// 204
-		}else if (params.get("result_set").equals("401")) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);// 401
-		}else if(params.get("result_set").equals("409")) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);// 409
-		}else {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}// 500
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204
+		}
+		else if(params.get("result_set").equals("409")) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT); // 409
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500
+		}
 	}
 
 }
