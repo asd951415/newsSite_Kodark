@@ -50,4 +50,9 @@ public class AdminProcedureServiceImpl implements AdminProcedureService {
 		// org.springframework.dao.DataIntegrityViolationException 데이터 제약 위반
 	}
 
+	@Override
+	public List<Map<String, Object>> getArticleList(Map<String, Object> params) {		
+		return adminProcedureDao.getArticleList(params);
+	}
+
 }

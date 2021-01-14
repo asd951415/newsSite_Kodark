@@ -110,4 +110,5 @@ public interface AdminProcedureMapper {
 	@Insert("INSERT INTO user_detail (user_id, nick_name, name, local, birth, gender, image)"
 			+ " VALUES(#{id}, #{_nickName}, #{_name}, #{_local}, #{_birth}, #{_gender}, #{_image})")
 	public void insertReporterDetail(Map<String, Object> params);
+	
 }

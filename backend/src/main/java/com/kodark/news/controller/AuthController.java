@@ -128,7 +128,7 @@ public class AuthController {
 		Map<String, Object> params = new HashMap<>();
 		params.put("_switch", "sign_in");
 		params.put("_email", email);
-		authProcedureService.execuAuthProcedure(params);
+		authProcedureService.execuAuthProcedure(params);		
 
 		if (params.get("result_set").equals("success")) {
 			String encodedPwd = (String) params.get("_pwd");

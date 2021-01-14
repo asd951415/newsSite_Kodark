@@ -150,7 +150,7 @@ public class ReporterController {
 		params.put("_reporter_id", reporterId);
 		params.put("result_set", status);
 		try {
-			reportersProcedureService.execuReportersBlindProcedure(params);
+			reportersProcedureService.execuReportersProcedureList(params);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);// 500
 		}
@@ -173,7 +173,7 @@ public class ReporterController {
 		params.put("_reporter_id", reporterId);
 		params.put("_switch", "unpublish");
 		try {
-			reportersProcedureService.execuReportersBlindProcedure(params);
+			reportersProcedureService.execuReportersProcedure(params);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);// 500
 		}

@@ -13,4 +13,6 @@ public interface ReportersProcedureService {
 	
 	public List<Map<String, Object>> execuReportersProcedureList(Map<String, Object> params);
 	
+	public Map<String, Object> getReporterInfo(Map<String, Object> params);
+	
 }

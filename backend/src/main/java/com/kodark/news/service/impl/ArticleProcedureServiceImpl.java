@@ -15,10 +15,7 @@ public class ArticleProcedureServiceImpl implements ArticleProcedureService {
 	@Autowired
 	private ArticleProcedureDao articleProcedureDao;
 
-	public void execuArticleProcedure(Map<String, Object> params) {
-		articleProcedureDao.execuArticleProcedure(params);
-	}
-	
+
 	@Override
 	public List<Map<String, Object>> execuArticleProcedure_2(Map<String, Object> params) {
 		return articleProcedureDao.execuArticleProcedure_2(params);
@@ -29,11 +26,6 @@ public class ArticleProcedureServiceImpl implements ArticleProcedureService {
 		return articleProcedureDao.latestProcedure(params);
 	}
 
-	@Override
-	public List<Map<String, Object>> execuCommentProcedure(int i) {
-
-		return articleProcedureDao.commentProcedure(i);
-	}
 
 	@Override
 	public List<Map<String, Object>> execuArticleProcedure(Map<String, Object> params) {
@@ -54,10 +46,7 @@ public class ArticleProcedureServiceImpl implements ArticleProcedureService {
 		return articleProcedureDao.excuArticleProcedureList(params);
 	}
 	
-	@Override
-	public List<Map<String, Object>> getArticleDetail(Map<String, Object> params) {
-		return articleProcedureDao.getArticleDetail(params);
-	}
+
 
 
 

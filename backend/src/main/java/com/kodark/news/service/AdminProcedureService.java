@@ -14,4 +14,6 @@ public interface AdminProcedureService {
 	public List<Map<String, Object>> getWaitArticles(String _status);
 	
 	public void createReporter(Map<String, Object> params);
+	
+	public List<Map<String, Object>> getArticleList(Map<String, Object> params);
 }

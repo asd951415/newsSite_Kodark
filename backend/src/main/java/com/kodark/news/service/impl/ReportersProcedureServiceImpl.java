@@ -37,5 +37,10 @@ public class ReportersProcedureServiceImpl implements ReportersProcedureService 
 		return reportersProcedureDao.getPubAndWaitArtlcles(status);
 	}
 
+	@Override
+	public Map<String, Object> getReporterInfo(Map<String, Object> params) {		
+		return reportersProcedureDao.execuReportersProcedureMap(params);
+	}
+
 }
 
