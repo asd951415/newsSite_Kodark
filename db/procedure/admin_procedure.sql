@@ -135,7 +135,7 @@ BEGIN
 	select 
     users.id, 
     user_detail.name, 
-    count(distinct article.id) as articleNum, 
+    count(article.id) as articleNum, 
     sum(article.hit) as totalHit,
     (select count(*) from subscriber where reporter_id = users.id) as subNum
     from users 
@@ -144,7 +144,7 @@ BEGIN
     on 
     users.id = user_detail.user_id
     
-    right join article
+    left join article
     on
     users.id = article.reporter_id
     
