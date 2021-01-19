@@ -291,11 +291,12 @@ public class UserController {
 		try {
 			params = new HashMap<String, Object>();
 			params.put("_switch", "comment_write");
-			params.put("_id", articleId);
+			params.put("_article_id", articleId);
 			params.put("_email", body.get("email"));
 			params.put("_content", body.get("content"));
 
-			usersProcedureService.execuCommentMapProcedure(params);
+			usersProcedureService.execuUsersProcedureList(params);
+			System.out.println(params.get("result_set"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -316,11 +317,11 @@ public class UserController {
 		try {
 			params = new HashMap<String, Object>();
 			params.put("_switch", "comment_reply");
-			params.put("_id", commentId);
+			params.put("_comment_id", commentId);
 			params.put("_email", body.get("email"));
 			params.put("_content", body.get("content"));
 
-			usersProcedureService.execuCommentMapProcedure(params);
+			usersProcedureService.execuUsersProcedureList(params);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -342,10 +343,10 @@ public class UserController {
 			
 			params = new HashMap<String, Object>();
 			params.put("_switch", "comment_report");
-			params.put("_id", commentId);
+			params.put("_comment_id", commentId);
 			params.put("_email", body.get("email"));
 			params.put("_reason", body.get("reason"));
-			usersProcedureService.execuCommentMapProcedure(params);
+			usersProcedureService.execuUsersProcedureList(params);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -515,12 +516,12 @@ public class UserController {
 		try {
 			list = new ArrayList<Map<String,Object>>();
 			params = new HashMap<String, Object>();
-			params.put("_switch", "comment_reputation");
-			params.put("_id", commentId);
+			params.put("_switch", "comm_reputation");
+			params.put("_comment_id", commentId);
 			params.put("_email", body.get("email"));
 			params.put("_reputation", body.get("reputation"));
 		
-			list = usersProcedureService.execuCommentListProcedure(params);
+			list = usersProcedureService.execuUsersProcedureList(params);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -537,28 +538,51 @@ public class UserController {
 	@GetMapping(path = "/comment")
 	public ResponseEntity<Map<String,Object>> testMapper(@RequestParam("userId") int userId){
 		List<Map<String,Object>> list = null;
+		List<Map<String,Object>> listTemp = null;
 		Map<String, Object> map = null;
 		Map<String, Object> temp = null;
 		Map<String, Object> params = null;
 		try {
 			list = new ArrayList<Map<String,Object>>();
 			map = new HashMap<String, Object>();
-			temp = new HashMap<String, Object>();
 			params = new HashMap<String, Object>();
 			
-			params.put("_switch", "comment_info_id");
-			params.put("_userId", userId);
-			temp = usersProcedureService.execuCommentMapProcedure(params);
-			map.put("id", temp.get("id"));
-			map.put("email", temp.get("email"));
-			map.put("nickName", temp.get("nick_name"));
-			map.put("local", temp.get("local"));
+			params.put("_switch", "comm_info_id");
+			params.put("_id", userId);
+			list = usersProcedureService.execuUsersProcedureList(params);
+			map.put("id", list.get(0).get("id"));
+			map.put("email", list.get(0).get("email"));
+			map.put("nickName", list.get(0).get("nick_name"));
+			map.put("local", list.get(0).get("local"));
+
 			params = new HashMap<String, Object>();
-			params.put("_switch", "comment_info_list");
-			params.put("_userId", userId);
-			list = usersProcedureService.execuCommentListProcedure(params);
-			map.put("comments", list);
+			list = new ArrayList<Map<String,Object>>();
 			
+			params.put("_switch", "comm_info_id_list");
+			params.put("_id", userId);
+			list = usersProcedureService.execuUsersProcedureList(params);
+			
+			listTemp = new ArrayList<Map<String,Object>>();
+			for(int i=0; i< list.size(); i++) {
+				params = new HashMap<String, Object>();
+				temp = new HashMap<String, Object>();
+				params.put("href", list.get(i).get("href"));
+				params.put("title", list.get(i).get("title"));
+				params.put("editedAt", list.get(i).get("editedAt"));
+				temp.put("article", params);
+				params = new HashMap<String, Object>();
+				params.put("recommend", list.get(i).get("recommend"));
+				params.put("recommend", list.get(i).get("decommend"));
+				temp.put("reputation", params);
+				temp.put("id", list.get(i).get("id"));
+				temp.put("content", list.get(i).get("content"));
+				temp.put("createdAt", list.get(i).get("createdAt"));
+				temp.put("delFlag", list.get(i).get("delFlag"));
+				listTemp.add(temp);
+			}
+			
+			map.put("comments", listTemp);
+
 			
 		} catch (Exception e) {
 			

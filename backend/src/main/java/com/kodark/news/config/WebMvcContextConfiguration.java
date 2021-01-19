@@ -31,11 +31,11 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
    private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/views/";
    private static final String VIEW_RESOLVER_SUFFIX = ".html";
    
-   @Autowired
-   private LogInterceptor logInterceptor;
-   
-   @Autowired
-   private JwtInterceptor jwtInterceptor;
+//   @Autowired
+//   private LogInterceptor logInterceptor;
+//   
+//   @Autowired
+//   private JwtInterceptor jwtInterceptor;
     
    @Override
    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -69,20 +69,20 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
 
 
 	// 인터셉터 : 요청과 응답을 기록하는 LogInterceptor와 인증을 검사하는 JwtInterceptor를 세팅
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(logInterceptor);
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(logInterceptor);
 		
-		registry.addInterceptor(jwtInterceptor)
-			.addPathPatterns("/users")
-			.addPathPatterns("/users/**")
-			.addPathPatterns("/reporters")
-			.addPathPatterns("/reporters/**")
-			.addPathPatterns("/admin")
-			.addPathPatterns("/admin/**")
-			.excludePathPatterns("/users/sign-up");
+//		registry.addInterceptor(jwtInterceptor)
+//			.addPathPatterns("/users")
+//			.addPathPatterns("/users/**")
+//			.addPathPatterns("/reporters")
+//			.addPathPatterns("/reporters/**")
+//			.addPathPatterns("/admin")
+//			.addPathPatterns("/admin/**")
+//			.excludePathPatterns("/users/sign-up");
 		
-	}
+//	}
 	
 	@Bean
 	public MultipartResolver multipartResolver() {

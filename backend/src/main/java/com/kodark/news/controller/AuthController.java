@@ -203,7 +203,7 @@ public class AuthController {
 
 		Map<String, Object> parameter = new HashMap<>();
 		parameter.put("_switch", "oauth");
-		parameter.put("_email", email);
+		parameter.put("_email", email); 
 		authProcedureService.execuAuthProcedure(parameter);
 		String resultSet = (String) parameter.get("result_set");
 

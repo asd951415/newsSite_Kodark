@@ -32,7 +32,13 @@ public interface UsersProcedureMapper {
 	@Select(value = "{CALL users_procedure("
 			+ "#{_switch, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
-			+ ",#{_userId, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"		
+			+ ",#{_article_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
+			+ ",#{_comment_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
+			+ ",#{_content, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
+			+ ",#{_reporter_id, mode=IN, jdbcType=INTEGER, javaType=java.lang.Integer }"
+			+ ",#{_reputation, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
+			+ ",#{_reason, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
+			+ ",#{_emotion, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_email, mode=INOUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_pwd, mode=INOUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_nickName, mode=INOUT, jdbcType=VARCHAR, javaType=java.lang.String}"
@@ -41,9 +47,8 @@ public interface UsersProcedureMapper {
 			+ ",#{_birth, mode=INOUT, jdbcType=DATE, javaType=java.util.Date}"
 			+ ",#{_gender, mode=INOUT, jdbcType=CHAR, javaType=java.lang.String}"
 			+ ",#{_image, mode=INOUT, jdbcType=VARCHAR, javaType=java.lang.String}"
-			+ ",#{_emotion, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}"
-			+ ",#{result_set, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ",#{_auth, mode=OUT, jdbcType=CHAR, javaType=java.lang.String}"
+			+ ",#{result_set, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}"
 			+ ")}")
 	@Options(statementType = StatementType.CALLABLE)
 	public List<Map<String, Object>> usersProcedureList(Map<String, Object> params);

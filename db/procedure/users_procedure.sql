@@ -1,7 +1,13 @@
-CREATE DEFINER=`jack`@`localhost` PROCEDURE `users_procedure`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `users_procedure`(
    in _switch varchar(20)
     , in _id int
+    , in _article_id int
+    , in _comment_id int
+    , in _content varchar(2000)
     , in _reporter_id int
+    , in _reputation varchar(20)
+    , in _reason varchar(20)
+    , in _emotion varchar(30)
     , inout _email varchar(50)  
     , inout _pwd varchar(300)
     , inout _nickName varchar(20)
@@ -19,6 +25,9 @@ declare idCount int;
 declare letterCheck char(1);
 declare tmp_pwd varchar(300);
 declare nickNameCount int;
+declare userId int;
+declare commentId int;
+declare articleId int;
 
 -- 회원정보 수정(34)--------------------------------------------
    if _switch = 'update_detail' then
@@ -179,9 +188,86 @@ if _switch = 'user_update' then
 			end if;
             set result_set = '200';
 		end if;
+
+      set result_set = '200';
 	else
 		set result_set = '404';
 	end if;
+end if;
+
+   /* 이종현 댓글 입력 */
+if _switch = 'comment_write' then    
+  select id into userId from users where email = _email;
+  
+  insert into comment(user_id,article_id,content)
+  values(userId,_article_id,_content);
+  set result_set = '200';
+	
+/* 이종현 대댓글 입력 */    
+elseif _switch ='comment_reply' then
+  select id into userId from users where email = _email;
+  select article_id into articleId from comment where id = _comment_id;
+  
+  insert into comment(parent_id,user_id,article_id,content)
+  values(_comment_id,userId,articleId,_content);
+
+  set result_set = '200';
+	
+/* 이종현 댓글 신고 */    
+elseif _switch ='comment_report' then
+  select id into userId from users where email = _email;
+  
+  insert into comm_report(user_id,comment_id,reason)
+  values(userId,_comment_id,_reason);
+
+  set result_set = '200';
+	
+ /* 이종현 댓글 추천/비추천 */    
+ elseif _switch ='comm_reputation' then
+  select id into userId from users where email = _email;
+  
+  insert into comm_reputation(user_id,comment_id,reputation)
+  values(userId,_comment_id,_reputation);
+	
+  select reputation, count(reputation) as count
+  from comm_reputation
+  where comment_id = _comment_id
+  group by reputation;
+else
+	set result_set = '404';
+end if;
+
+/* 이종현 특정 회원의 모든 댓글 보기 */
+if _switch = 'comm_info_id' then
+	select 
+	u.id
+	,u.email
+	,ud.nick_name
+	,ud.local
+	from users u
+	inner join user_detail ud
+	on u.id = ud.user_id
+	where u.id = _id;
+
+elseif _switch = 'comm_info_id_list' then
+	select 
+	concat('/article?id=',a.id) as href
+	,a.title
+	,DATE_FORMAT(a.edited_at, '%Y-%m-%d %H:%i:%S') as editedAt
+	,c.id
+	,c.content
+	,DATE_FORMAT(c.created_at, '%Y-%m-%d %H:%i:%S') as createdAt
+	,c.del_flag as delFlag
+	,(select count(reputation) as decommend from comm_reputation where reputation = 'recommend' and comment_id = c.id) as recommend
+	,(select count(reputation) as decommend from comm_reputation where reputation = 'decommend' and comment_id = c.id) as decommend
+	from comment c
+	inner join article a
+	on c.article_id = a.id
+	where c.user_id = _id
+	;
+	set result_set = '200';
+else
+	set result_set = '404';
 end if;
    
 END

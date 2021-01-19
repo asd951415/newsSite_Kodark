@@ -1,4 +1,4 @@
-CREATE DEFINER=`jack`@`localhost` PROCEDURE `article_procedure`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `article_procedure`(
   in _switch varchar(20)
   ,in _article_id int
   ,in _reporter_id int

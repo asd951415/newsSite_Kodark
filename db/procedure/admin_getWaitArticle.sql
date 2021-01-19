@@ -1,4 +1,4 @@
-CREATE DEFINER=`jack`@`localhost` PROCEDURE `admin_getWaitArticle`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_getWaitArticle`(
    in _status varchar(10)
 )
 BEGIN
