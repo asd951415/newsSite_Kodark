@@ -32,8 +32,8 @@
         <td>{{article["createdAt "]}}</td>
         <td class="articleTitle">
           <!-- <router-link :to="`/en/article?articleId=${article.id}` "> -->
-          <router-link :to="article._links[0].href">
-            {{article["title "]}} {{article._links[0].href}}
+          <router-link :to="article._links[3].href">
+            {{article["title "]}} {{article._links[3].href}}
           </router-link>
         </td>
         <td>{{article.hit}}</td>

@@ -32,8 +32,8 @@
           >
             <td>{{ reporter.id }}</td>
             <td>{{ reporter.name }}</td>
-            <td>{{ reporter.subNum }}</td>
             <td>{{ reporter.totalHit === undefined ? 0 : reporter.totalHit }}</td>
+            <td>{{ reporter.subNum }}</td>
             <td>{{ reporter.articleNum }}</td>
           </tr>
         </tbody>

@@ -364,7 +364,6 @@ public class UserController {
 		params.put("_reporter_id", reporterId);
 		try {
 			usersProcedureService.execuUsersProcedure(params);
-			System.out.println("params:"+params);
 			if(params.get("result_set").equals("404")) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);//404
 			}
@@ -385,7 +384,6 @@ public class UserController {
 			//,HttpServletRequest request
 			){
 		Map<String, Object> params = new HashMap<>();		
-		System.out.println("start");
 		//int id = (int) request.getAttribute("id");
 		int id = 5;//test용
 		params.put("_switch", "toggle");
@@ -393,7 +391,6 @@ public class UserController {
 		params.put("_reporter_id", reporterId);
 		try {
 			usersProcedureService.execuUsersProcedure(params);
-			System.out.println("params:"+params);
 			if(params.get("result_set").equals("404")) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);//404
 			}
@@ -565,7 +562,6 @@ public class UserController {
 //	@PostMapping(path = "/emotion")
 	public ResponseEntity<List<Map<String, Object>>> chooseEmotion(
 	@RequestParam("articleId") int articleId, @RequestParam("emotion") String emotion, HttpServletRequest request){
-		System.out.println("/emotion");
 		int id = (int) request.getAttribute("id"); 
 		
 		List<Map<String, Object>> list = null;

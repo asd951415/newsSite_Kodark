@@ -40,6 +40,7 @@ if _switch = 'comment' then
 			,date_format(c.created_at, '%Y-%m-%d %H:%i:%S') as createdAt,c.del_flag as delFlag 
 			,(select count(reputation) from comm_reputation where reputation = 'recommend' and comment_id = c.id ) as recommend
 			,(select count(reputation) from comm_reputation where reputation = 'decommend'and comment_id = c.id ) as decommend
+            ,(select count(*) from comment where parent_id = c.id) as replies_count
 		from comment as c
 		left join users as u on c.user_id = u.id
 		left join user_detail as ud on u.id = ud.user_id
@@ -52,6 +53,7 @@ if _switch = 'comment' then
 			,date_format(c.created_at, '%Y-%m-%d %H:%i:%S') as createdAt,c.del_flag as delFlag 
 			,(select count(reputation) from comm_reputation where reputation = 'recommend' and comment_id = c.id ) as recommend
 			,(select count(reputation) from comm_reputation where reputation = 'decommend'and comment_id = c.id ) as decommend
+            ,(select count(*) from comment where parent_id = c.id) as replies_count
 		from comment as c
 		left join users as u on c.user_id = u.id
 		left join user_detail as ud on u.id = ud.user_id
@@ -132,14 +134,14 @@ end if;
 			from article as a
 				left outer join image as i on a.id = i.article_id
 				left outer join category as c on a.category_id = c.id 
-			where a.created_at > DATE_SUB(current_timestamp(), INTERVAL 1000 HOUR)
+			where a.created_at > DATE_SUB(current_timestamp(), INTERVAL 1000 HOUR) and a.status = 'publish'
 			order by a.hit desc, a.id desc limit 10;
 		else 
 			select a.id, a.title, a.sub_title, i.image, i.description as imgDec, created_at
 			from article as a
 				left outer join image as i on a.id = i.article_id
 				left outer join category as c on a.category_id = c.id 
-			where a.created_at > DATE_SUB(current_timestamp(), INTERVAL 1000 HOUR)
+			where a.created_at > DATE_SUB(current_timestamp(), INTERVAL 1000 HOUR) and a.status = 'publish'
 				and c.name = _category
 			order by a.hit desc, a.id desc limit 10;
 		end if;
@@ -155,7 +157,7 @@ if _switch = 'latest' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and c.name= _category
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and c.name= _category and a.status = 'publish'
     order by a.id desc
     limit 10;
     set result_set = 'success';
@@ -166,7 +168,7 @@ if _switch = 'latest_all' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 1
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 1 and a.status = 'publish'
     order by a.id desc
     limit 5)
 	union
@@ -174,7 +176,7 @@ if _switch = 'latest_all' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 2
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 2 and a.status = 'publish'
     order by a.id desc
     limit 5)
     union
@@ -182,7 +184,7 @@ if _switch = 'latest_all' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 3
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 3 and a.status = 'publish'
     order by a.id desc
     limit 5)
     union
@@ -190,7 +192,7 @@ if _switch = 'latest_all' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 4
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 4 and a.status = 'publish'
     order by a.id desc
     limit 5)
     union
@@ -198,7 +200,7 @@ if _switch = 'latest_all' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 5
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 5 and a.status = 'publish'
     order by a.id desc
     limit 5)
     union
@@ -206,7 +208,7 @@ if _switch = 'latest_all' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 6
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 6 and a.status = 'publish'
     order by a.id desc
     limit 5)
     union
@@ -214,7 +216,7 @@ if _switch = 'latest_all' then
 	from article as a 
 	left join image as i on a.id = i.article_id
 	left join category as c on a.category_id = c.id
-	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 7
+	where created_at  > date_sub(current_timestamp(), interval 1000 hour) and a.category_id = 7 and a.status = 'publish'
     order by a.id desc
     limit 5)
 	;

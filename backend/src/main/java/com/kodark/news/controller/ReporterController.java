@@ -279,6 +279,8 @@ public class ReporterController {
 		Map<String, Object> link1;
 		Map<String, Object> link2;
 		Map<String, Object> link3;
+		Map<String, Object> link4;
+		Map<String, Object> link5;
 		
 		int id = (int)request.getAttribute("id");
 		Map<String, Object> params = new HashMap<>();
@@ -302,9 +304,11 @@ public class ReporterController {
 			link1 = new HashMap<String, Object>();
 			link2 = new HashMap<String, Object>();
 			link3 = new HashMap<String, Object>();
+			link4 = new HashMap<String, Object>();
+			link5 = new HashMap<String, Object>();
 
 			link1.put("rel", "editArticleForm");
-			link1.put("href", "/en/reporters/article=" + list.get(i).get("id"));
+			link1.put("href", "/en/reporters/article");
 			link1.put("method ", "get");
 			linkList.add(link1);
 
@@ -314,10 +318,20 @@ public class ReporterController {
 			linkList.add(link2);
 
 			link3.put("rel", "deleteArticle");
-			link3.put("href", "/reporters/article?articleId");
+			link3.put("href", "/reporters/article="+list.get(i).get("id"));
 			link3.put("method ", "delete");
-
 			linkList.add(link3);
+//			+ list.get(i).get("id")
+			
+			link4.put("rel", "article");
+			link4.put("href", "/en/article?articleId="+list.get(i).get("id"));
+			link4.put("method ", "get");
+			linkList.add(link4);
+			
+			link5.put("rel", "articlestatics");
+			link5.put("href", "/reporters/article/statics="+list.get(i).get("id"));
+			link5.put("method ", "get");
+			linkList.add(link5);
 			container.put("_links", linkList);
 			list.set(i, container);
 		}
@@ -354,5 +368,39 @@ public class ReporterController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 
+	@GetMapping(path = "/article/detail")
+	public ResponseEntity<Map<String, Object>> getWaitingArticle(
+			@RequestParam(name = "articleId")int articleId) {
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("_switch", "get_waiting_article");
+		params.put("_article_id", articleId);
+		List<Map<String,Object>> list = reportersProcedureService.execuReportersProcedure(params);
+		Map<String, Object> articleData = list.get(0);
+		
+		Map<String, Object> articleDetail = new HashMap<>();
+		articleDetail.put("id", articleData.get("article_id"));
+		articleDetail.put("title", articleData.get("title"));
+		articleDetail.put("subTitle", articleData.get("sub_title"));
+		articleDetail.put("content", articleData.get("content"));
+		articleDetail.put("createdAt", articleData.get("created_at"));
+		articleDetail.put("editedAt", articleData.get("edited_at"));
+		
+		List<Map<String,Object>> images = new ArrayList<>();
+		Map<String, Object> mainImage = new HashMap<>();
+		mainImage.put("image", articleData.get("image"));
+		mainImage.put("source", articleData.get("source"));
+		mainImage.put("imgDec", articleData.get("description"));
+		images.add(mainImage);
+		articleDetail.put("images", images);
+		
+		Map<String, Object> reporter = new HashMap<>();
+		reporter.put("id", articleData.get("reporter_id"));
+		reporter.put("email", articleData.get("email"));
+		reporter.put("name", articleData.get("name"));
+		articleDetail.put("reporter", reporter);
+		
+		return new ResponseEntity<Map<String, Object>> (articleDetail, HttpStatus.OK);
+	}
 }
 

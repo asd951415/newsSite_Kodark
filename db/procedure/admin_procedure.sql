@@ -213,4 +213,30 @@ BEGIN
    else set result_set = '500';
    end if;
 
+if _switch = 'admin_wait_article' then
+	if _status = 'null' then
+		select
+			user_detail.name
+			, users.email
+			, article.id
+			, article.title
+		from article
+			left join users on users.id = article.reporter_id
+			left join user_detail on users.id = user_detail.user_id
+		where article.status is null
+		;
+    else
+		select
+			user_detail.name
+			, users.email
+			, article.id
+			, article.title
+		from article
+			left join users on users.id = article.reporter_id
+			left join user_detail on users.id = user_detail.user_id
+		where article.status = _status
+		;
+	end if;
+end if;
+
 END

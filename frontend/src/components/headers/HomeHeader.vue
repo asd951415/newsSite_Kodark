@@ -37,7 +37,7 @@
         </router-link>
       </li>
       <li>
-        날씨 넣을 공간
+        weather place
       </li>
     </ul>
     <div class="homeHeaderNavi">

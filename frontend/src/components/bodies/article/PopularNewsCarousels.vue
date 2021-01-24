@@ -9,7 +9,7 @@
         v-for="(news, i) in formatedNews"
         :key="i"
       >
-        <router-link :to="news._link.href">
+        <router-link :to="'/en' + news._link.href">
           <div class="slideNewsContainer">
             <div class="text-h5 font-weight-bold" style="word-break: break-all;">
               {{news.title}}

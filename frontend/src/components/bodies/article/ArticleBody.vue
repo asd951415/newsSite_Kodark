@@ -2,6 +2,7 @@
   <div>
     <div class="articleBody">
       <ArticleTitle :title="title" :subTitle="subTitle" :reporter="reporter" :editedAt="editedAt" />
+      
       <div class="articleTitleMargin">
         <ArticleSubFunction
         :commentCount="comment.commentCount"
@@ -13,31 +14,24 @@
         @openUnauthorizedWindow="openUnauthorizedWindow"
         />
       </div>
-      <div class="articleContentContainer" id="articleContent"></div>
-      <div class="reporterInfo">
-        <p>
-          By Reporter {{ reporter.name }}
-        </p>
-        <p>
-          Email : {{ reporter.email }}
-        </p>
-        <p>
-          Created at {{ createdAt }}
-        </p>
-        <p>
-          Edited at {{ editedAt }}
-        </p>
-        <p>
-          <ArticleSubFunction
-          :commentCount="comment.commentCount"
-          :emotions="emotions"
-          :userEmotion="userEmotion"
-          :reporter="reporter"
-          @openCommentWindow="openCommentWindow"
-          @chooseEmotion="chooseEmotion"
-          @openUnauthorizedWindow="openUnauthorizedWindow"
-          />
-        </p>
+
+      <ArticleContent 
+      :content="content"
+      :reporter="reporter"
+      :createdAt="createdAt"
+      :editedAt="editedAt"
+      />
+
+      <div class="articleBottomMargin">
+        <ArticleSubFunction
+        :commentCount="comment.commentCount"
+        :emotions="emotions"
+        :userEmotion="userEmotion"
+        :reporter="reporter"
+        @openCommentWindow="openCommentWindow"
+        @chooseEmotion="chooseEmotion"
+        @openUnauthorizedWindow="openUnauthorizedWindow"
+        />
       </div>
     </div>
     <v-navigation-drawer
@@ -92,6 +86,7 @@
           <CommentForm
           @submitComment="submitComment"
           @closeCommentForm="closeCommentForm"
+          @openUnauthorizedWindow="openUnauthorizedWindow"
           />
         </template>
       </div>
@@ -124,6 +119,7 @@
 <script>
 import ArticleTitle from './ArticleTitle'
 import ArticleSubFunction from './ArticleSubFunction'
+import ArticleContent from './ArticleContent'
 import Comment from '../../units/Comment'
 import CommentForm from '../../units/CommentForm'
 
@@ -131,6 +127,7 @@ export default {
   components: {
     ArticleTitle,
     ArticleSubFunction,
+    ArticleContent,
     Comment,
     CommentForm
   },
@@ -166,7 +163,7 @@ export default {
         this.editedAt = article.editedAt
         this.comment.commentCount = article.commentCount
         this.reporter = article.reporter
-        document.getElementById('articleContent').innerHTML = this.content
+        // document.getElementById('articleContent').innerHTML = this.content
       }
     },
     async setEmotionData() {
@@ -211,7 +208,6 @@ export default {
       this.setCommentList()
     },
     async submitComment(content) {
-      // if(!this.$refs.comment.validate(true)) return
       const articleId = this.$route.query.articleId
       const { status } = await this.$store.dispatch('users/createComment', { articleId, content })
       
@@ -283,14 +279,13 @@ export default {
   padding: 20px 0;
 }
 
-.reporterInfo {
+.articleBottomMargin {
   position: relative;
   max-width: 600px;
   width: 600px;
   left: calc((100% - 600px) / 2);
-  padding-top: 43px;
-  font-size: 16px;
-  font-style: italic;
+  padding-top: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid black;
   margin-bottom: 40px;
 }
@@ -311,31 +306,4 @@ export default {
   border-bottom: 1px solid rgb(215, 215, 215);
 }
 
-
 </style>
-
-<style>
-
-.articleContentContainer p
-, .articleContentContainer div
-, .articleContentContainer h1
-, .articleContentContainer h2
-, .articleContentContainer h3
-{
-  position: relative;
-  max-width: 600px;
-  width: 600px;
-  font-size: 18px;
-  margin: 0 auto 16px auto;
-  display: grid;
-  justify-content: center;
-}
-
-.articleContentContainer img {
-  max-width: 1200px;
-  object-fit: cover;
-  margin: 27px auto 43px auto;
-}
-
-</style>
-

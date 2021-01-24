@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -107,24 +108,31 @@ public class AdminController {
 	 * 작성일 : 2021-01-05
 	 */
 	@GetMapping(path = "/article")
-	public ResponseEntity<List<Map<String, Object>>> waitingArticle(@RequestParam("status") String status,
+	public ResponseEntity<List<Map<String, Object>>> waitingArticle(
+			@RequestParam("status") String status, // null, publish, blind
 			HttpServletResponse response) {
-		String _status = status;
+		
+		Map<String, Object> params = null;
 		List<Map<String, Object>> list = new ArrayList<>();
 		Map<String, Object> container;
 		Map<String, Object> reporter;
 		Map<String, Object> article;
 		Map<String, Object> link;
-		list = adminProcedureService.getWaitArticles(_status);
 
+		params = new HashMap<String, Object>();
+		params.put("_switch", "admin_wait_article");
+		params.put("_status", status);
+		list = adminProcedureService.execuAdminProcedure(params);
+
+		if(list.size() == 0) return new ResponseEntity<>(HttpStatus.NOT_FOUND);// 404
+		
 		for (int i = 0; i < list.size(); i++) {
 			reporter = new HashMap<>();
 			article = new HashMap<>();
 			container = new HashMap<>();
 			link = new HashMap<>();
-
 			link.put("rel", "waitingArticleDetail");
-			link.put("href", "/admin/article?articleId&status=waiting");
+			link.put("href", "/reporters/article/detail?articleId="+list.get(i).get("id"));
 			link.put("method", "get");
 
 			reporter.put("name", list.get(i).get("name"));
@@ -140,13 +148,9 @@ public class AdminController {
 		}
 
 		response.setHeader("Links", "</admin/article?articleId&status=\"waiting\">; rel=\"waitingArticleDetail\"");
-		if (adminProcedureService.getWaitArticles(_status).get(1) == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);// 404
-		} else if (adminProcedureService.getWaitArticles(_status).get(1) != null) {
-			return new ResponseEntity<List<Map<String, Object>>>(list, HttpStatus.OK); // 200;
-		} else {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);// 500
-		}
+		
+		return new ResponseEntity<List<Map<String, Object>>>(list, HttpStatus.OK); // 200;
+		
 	}
 
 	/**
@@ -218,16 +222,13 @@ public class AdminController {
 		String email = (String) body.get("email");
 		String title = (String) body.get("title");
 		String content = (String) body.get("content");
+		
 		Mail mail = new Mail();
-		try {
-			mail.setMailFrom(env.getProperty("email.username"));
-			mail.setMailTo(email);
-			mail.setMailSubject(title);
-			mail.setMailContent(content);
-			mailService.sendMail(mail);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);// 500
-		}
+		mail.setMailFrom(env.getProperty("email.username"));
+		mail.setMailTo(email);
+		mail.setMailSubject(title);
+		mail.setMailContent(content);
+		mailService.sendMail(mail);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);// 204
 	}
@@ -241,7 +242,6 @@ public class AdminController {
 	 */
 	@PatchMapping(path = "/report/article")
 	public ResponseEntity<Map<String, Object>> articleBlind(@RequestBody Map<String, Object> body){
-		System.out.println("aaa:"+body);
 		Map<String, Object> params = new HashMap<>();
 		int articleId = Integer.valueOf((String)body.get("articleId"));
 		String status = (String)body.get("status");
@@ -356,7 +356,6 @@ public class AdminController {
 		Map<String, Object> params = new HashMap<>();
 		Map<String, Object> maps = new HashMap<>();
 		Map<String, Object> userInfo = new HashMap<>();
-		 System.out.println(status+":"+sId);
 		int id = sId;	
 		params.put("_switch","question_list");
 		params.put("_id", id-1);		
@@ -365,7 +364,6 @@ public class AdminController {
 		
 		list = adminProcedureService.execuAdminProcedure(params);		
 		for(int i=0;i<list.size();i++) {
-			System.out.println("list:"+list.get(i));
 			maps = new HashMap<>();
 			temp = new ArrayList<>();			
 			userInfo = new HashMap<>();
@@ -418,10 +416,8 @@ public class AdminController {
 			params.put("_switch", "suspension");
 			params.put("_input", reason);
 			adminProcedureService.execuAdminProcedure(params);
-			System.out.println("param:"+params);
 			mail.setMailFrom(env.getProperty("email.username"));
 			String email = (String) params.get("_email");
-			System.out.println("email:"+email);
 			mail.setMailTo(email);
 			mail.setMailSubject("Kodark Times 이용정지안내");
 			mail.setMailContent("<h3>reason : </h3>"+reason+"<br><p>Period : "+startDate+" ~ "+endDate+"</p>");
@@ -688,6 +684,18 @@ public class AdminController {
 			return new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<Map<String,Object>>(mapAll,HttpStatus.OK);
+	}
+	
+	@PatchMapping(path = "/article/publish")
+	public ResponseEntity<Map<String, Object>> publishArticle(
+			@RequestParam(name = "articleId")int articleId) {
+		
+		Map<String, Object> params = new HashMap<>(); 
+		params.put("_switch", "publish_article");
+		params.put("_id", articleId);
+		adminProcedureService.execuAdminProcedure(params);
+		
+		return new ResponseEntity<Map<String,Object>>(HttpStatus.CREATED);
 	}
 
 }
